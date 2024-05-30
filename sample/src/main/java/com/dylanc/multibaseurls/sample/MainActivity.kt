@@ -56,13 +56,13 @@ class MainActivity : AppCompatActivity() {
       .baseUrl("https://jsonplaceholder.typicode.com/")
       .build()
     globalBaseUrl = "https://jsonplaceholder.typicode.com/v0/"
-    dynamicBaseUrls["test"] = "https://jsonplaceholder.typicode.com/v1"
-    dynamicBaseUrls["test2"] = "https://jsonplaceholder.typicode.com/v2"
+    dynamicBaseUrls["test"] = "https://jsonplaceholder.typicode.com/v4"
+    dynamicBaseUrls["test2"] = "https://jsonplaceholder.typicode.com/v3"
 
     lifecycleScope.launch {
       try {
         val api = retrofit.create(Api::class.java)
-        api.listRepos()
+        api.test("https://jsonplaceholder.typicode.com/v5/posts/1")
       } catch (e: Exception) {
         e.printStackTrace()
       }

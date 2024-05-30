@@ -20,12 +20,9 @@ import com.dylanc.multibaseurls.BaseUrl
 import retrofit2.http.GET
 import retrofit2.http.Url
 
-//@BaseUrl("https://jsonplaceholder.typicode.com/v4", key = "test2")
-@BaseUrl(key = "test2")
+@BaseUrl(key = "test2", value = "https://jsonplaceholder.typicode.com/v1")
 interface Api {
-  @GET("/posts/1")
-//  @BaseUrl("https://jsonplaceholder.typicode.com/v3", key = "test")
-  @BaseUrl(key = "test")
-//  @JvmOverloads
-  suspend fun listRepos(@Url url: String = "/v10/"): String
+  @GET
+  @BaseUrl(key = "test", value = "https://jsonplaceholder.typicode.com/v2")
+  suspend fun test(@Url url: String = "/posts/1"): String
 }
