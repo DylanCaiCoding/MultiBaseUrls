@@ -22,9 +22,9 @@ package com.dylanc.multibaseurls
 import okhttp3.OkHttpClient
 import java.util.concurrent.ConcurrentHashMap
 
-val dynamicBaseUrls = ConcurrentHashMap<String, String>()
-
 var globalBaseUrl: String? = null
+
+val dynamicBaseUrls = ConcurrentHashMap<String, String>()
 
 @get:JvmName("isEnabled")
 @set:JvmName("setEnabled")
