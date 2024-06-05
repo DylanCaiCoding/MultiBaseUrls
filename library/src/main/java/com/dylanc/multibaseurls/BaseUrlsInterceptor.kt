@@ -37,19 +37,19 @@ class BaseUrlsInterceptor(
     val invocation = request.tag(Invocation::class.java)
     val method = invocation?.method() ?: return chain.proceed(request)
 
-    val (baseUrl, methodUrlKey, clazzUrlKey, urlAnnotationIndex) = urlsConfigCache.getOrPut(method) {
-      val baseUrl = method.getAnnotation(BaseUrl::class.java)?.value?.takeIfValidUrl()
+    val (apiBaseUrl, methodUrlKey, clazzUrlKey, urlAnnotationIndex) = urlsConfigCache.getOrPut(method) {
+      val apiBaseUrl = method.getAnnotation(BaseUrl::class.java)?.value?.takeIfValidUrl()
         ?: method.declaringClass?.getAnnotation(BaseUrl::class.java)?.value?.takeIfValidUrl()
       val methodUrlKey = method.getAnnotation(BaseUrl::class.java)?.key?.takeIfNotEmpty()
       val clazzUrlKey = method.declaringClass?.getAnnotation(BaseUrl::class.java)?.key?.takeIfNotEmpty()
       val urlAnnotationIndex = method.parameterAnnotations.indexOfFirst { annotations -> annotations.any { it is Url } }
-      UrlsConfig(baseUrl, methodUrlKey, clazzUrlKey, urlAnnotationIndex)
+      UrlsConfig(apiBaseUrl, methodUrlKey, clazzUrlKey, urlAnnotationIndex)
     }
 
     val hasUrlParameter = invocation.arguments()?.getOrNull(urlAnnotationIndex)?.toString()?.isValidUrl() == true
     val dynamicBaseUrl = methodUrlKey?.let { dynamicBaseUrls[it] }?.takeIfValidUrl()
       ?: clazzUrlKey?.let { dynamicBaseUrls[it] }?.takeIfValidUrl()
-    val newBaseUrl = (dynamicBaseUrl ?: baseUrl ?: globalBaseUrl)?.toHttpUrlOrNull()
+    val newBaseUrl = (dynamicBaseUrl ?: apiBaseUrl ?: globalBaseUrl)?.toHttpUrlOrNull()
 
     return if (!hasUrlParameter && newBaseUrl != null) {
       val newFullUrl = request.url.newBuilder()

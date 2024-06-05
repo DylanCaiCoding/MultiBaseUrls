@@ -52,9 +52,6 @@ class MainActivity : AppCompatActivity() {
       .addConverterFactory(ScalarsConverterFactory.create())
       .addConverterFactory(GsonConverterFactory.create())
       .build()
-    retrofit.newBuilder()
-      .baseUrl("https://jsonplaceholder.typicode.com/")
-      .build()
     globalBaseUrl = "https://jsonplaceholder.typicode.com/v0/"
     dynamicBaseUrls["test"] = "https://jsonplaceholder.typicode.com/v4"
     dynamicBaseUrls["test2"] = "https://jsonplaceholder.typicode.com/v3"

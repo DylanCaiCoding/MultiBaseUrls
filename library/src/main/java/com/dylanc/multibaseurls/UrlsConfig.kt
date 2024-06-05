@@ -17,7 +17,7 @@
 package com.dylanc.multibaseurls
 
 data class UrlsConfig(
-  val apiUrl: String?,
+  val apiBaseUrl: String?,
   val methodUrlKey: String?,
   val clazzUrlKey: String?,
   val urlAnnotationIndex: Int,
