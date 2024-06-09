@@ -46,40 +46,37 @@ class BaseUrlsInterceptor(
       UrlsConfig(apiBaseUrl, methodUrlKey, clazzUrlKey, urlAnnotationIndex)
     }
 
-    val hasUrlParameter = invocation.arguments()?.getOrNull(urlAnnotationIndex)?.toString()?.isValidUrl() == true
+    invocation.arguments()?.getOrNull(urlAnnotationIndex)?.toString()?.takeIfValidUrl()
+      ?.run { return chain.proceed(request) }
+
     val dynamicBaseUrl = methodUrlKey?.let { dynamicBaseUrls[it] }?.takeIfValidUrl()
       ?: clazzUrlKey?.let { dynamicBaseUrls[it] }?.takeIfValidUrl()
     val newBaseUrl = (dynamicBaseUrl ?: apiBaseUrl ?: globalBaseUrl)?.toHttpUrlOrNull()
-
-    return if (!hasUrlParameter && newBaseUrl != null) {
-      val newFullUrl = request.url.newBuilder()
-        .apply {
-          (0..<request.url.pathSize).forEach { _ ->
-            removePathSegment(0)
-          }
-          (newBaseUrl.encodedPathSegments + request.url.encodedPathSegments).forEach {
-            addEncodedPathSegment(it)
-          }
+      ?: return chain.proceed(request)
+    val newFullUrl = request.url.newBuilder()
+      .scheme(newBaseUrl.scheme)
+      .host(newBaseUrl.host)
+      .port(newBaseUrl.port)
+      .apply {
+        (0..<request.url.pathSize).forEach { _ ->
+          removePathSegment(0)
         }
-        .scheme(newBaseUrl.scheme)
-        .host(newBaseUrl.host)
-        .port(newBaseUrl.port)
-        .build()
-      chain.proceed(request.newBuilder().url(newFullUrl).build())
-    } else {
-      chain.proceed(request)
-    }
+        (newBaseUrl.encodedPathSegments + request.url.encodedPathSegments).forEach {
+          addEncodedPathSegment(it)
+        }
+      }
+      .build()
+    return chain.proceed(request.newBuilder().url(newFullUrl).build())
   }
-
-  private fun String.takeIfValidUrl() = takeIf { it.isValidUrl() }
 
   private fun String.takeIfNotEmpty() = takeIf { it.isNotEmpty() }
 
-  private fun String.isValidUrl() =
+  private fun String.takeIfValidUrl() = takeIf {
     try {
       val url = URL(this)
       url.protocol == "http" || url.protocol == "https"
     } catch (e: MalformedURLException) {
       false
     }
+  }
 }
