@@ -58,7 +58,7 @@ class BaseUrlsInterceptor(
       .host(newBaseUrl.host)
       .port(newBaseUrl.port)
       .apply {
-        (0..<request.url.pathSize).forEach { _ ->
+        (0 until request.url.pathSize).forEach { _ ->
           removePathSegment(0)
         }
         (newBaseUrl.encodedPathSegments + request.url.encodedPathSegments).forEach {

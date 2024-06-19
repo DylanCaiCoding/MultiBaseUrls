@@ -17,6 +17,7 @@
 package com.dylanc.multibaseurls.sample
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,7 +26,6 @@ import androidx.lifecycle.lifecycleScope
 import com.dylanc.multibaseurls.dynamicBaseUrls
 import com.dylanc.multibaseurls.enableMultiBaseUrls
 import com.dylanc.multibaseurls.globalBaseUrl
-import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
     }
     val okHttpClient = OkHttpClient.Builder()
       .enableMultiBaseUrls()
-      .addInterceptor(OkHttpProfilerInterceptor())
       .build()
     val retrofit = Retrofit.Builder()
       .baseUrl("https://jsonplaceholder.typicode.com/")
@@ -56,12 +55,14 @@ class MainActivity : AppCompatActivity() {
     dynamicBaseUrls["test"] = "https://jsonplaceholder.typicode.com/v4"
     dynamicBaseUrls["test2"] = "https://jsonplaceholder.typicode.com/v3"
 
-    lifecycleScope.launch {
-      try {
-        val api = retrofit.create(Api::class.java)
-        api.test("https://jsonplaceholder.typicode.com/v5/posts/1")
-      } catch (e: Exception) {
-        e.printStackTrace()
+    findViewById<View>(R.id.button).setOnClickListener {
+      lifecycleScope.launch {
+        try {
+          val api = retrofit.create(Api::class.java)
+          api.test("https://jsonplaceholder.typicode.com/v5/posts/1")
+        } catch (e: Exception) {
+          e.printStackTrace()
+        }
       }
     }
 

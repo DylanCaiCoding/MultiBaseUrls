@@ -26,8 +26,6 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 gsonconverter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 scalarsconverter = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
-okhttpprofiler = { group = "com.localebro", name = "okhttpprofiler", version.ref = "okhttpprofiler" }
-httplogginginterceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
