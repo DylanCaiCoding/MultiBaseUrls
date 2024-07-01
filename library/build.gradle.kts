@@ -1,6 +1,20 @@
 plugins {
   alias(libs.plugins.androidLibrary)
   alias(libs.plugins.jetbrainsKotlinAndroid)
+  id("maven-publish")
+}
+
+afterEvaluate {
+  publishing {
+    publications {
+      create<MavenPublication>("release") {
+        groupId = "com.dylanc"
+        artifactId = "multibaseurls"
+        version = "1.0.0"
+        from(components["release"])
+      }
+    }
+  }
 }
 
 android {
