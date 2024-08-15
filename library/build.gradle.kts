@@ -47,6 +47,10 @@ dependencies {
   api(libs.retrofit)
   api(libs.okhttp)
   testImplementation(libs.junit)
+  testImplementation(libs.gsonconverter)
+  testImplementation(libs.mockwebserver)
+  testImplementation(libs.kotlin.test)
+  testImplementation(libs.kotlinx.coroutines.test)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
 }
