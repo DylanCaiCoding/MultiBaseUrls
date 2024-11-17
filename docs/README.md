@@ -145,7 +145,7 @@ MultiBaseUrls.getDynamicBaseUrls().put("url2", "https://xxxxxx.com/v3/");
 
 ## 替换 baseUrl 规则
 
-<img src="/img/replace_base_url_rules.png" width="618" height="542">
+<img src="https://github.com/DylanCaiCoding/MultiBaseUrls/blob/main/docs/img/replace_base_url_rules.png" width="618" height="542">
 
 1. 读取函数上的 `@Url` 注解修饰的参数，如果参数传入的是全路径地址，那就直接使用该地址;
 2. 读取函数上的 `@BaseUrl` 注解，如果有配置 key，并且 `dynamicBaseUrls` 里有对应的域名，那就使用该域名;
