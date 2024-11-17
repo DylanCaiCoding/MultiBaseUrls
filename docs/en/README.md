@@ -145,7 +145,7 @@ MultiBaseUrls.getDynamicBaseUrls().put("url2", "https://xxxxxx.com/v3/");
 
 ## Replace baseUrl rules
 
-<img src="/img/replace_base_url_rules.png" width="618" height="542">
+<img src="https://github.com/DylanCaiCoding/MultiBaseUrls/blob/main/docs/img/replace_base_url_rules.png" width="618" height="542">
 
 1. Read the parameter decorated with `@Url` annotation on the function, if the parameter passed in is a full path address, then use this address directly;
 2. Read the `@BaseUrl` annotation on the function, if a key is configured and there is a corresponding domain name in `dynamicBaseUrls`, then use this domain name;
