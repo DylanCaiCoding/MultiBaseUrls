@@ -4,6 +4,12 @@
 
 用注解让 Retrofit 同时支持多个 `baseUrl` 以及动态改变 `baseUrl`。
 
+## Features
+
+- 支持多种用 `@BaseUrl` 注解修改 `baseUrl` 的方式
+- 支持用 `globalBaseUrl` 修改全局的 `baseUrl`
+- 优先使用 `@Url` 修饰的全路径参数的 `baseUrl`
+
 ## Gradle
 
 在 `settings.gradle` 文件的 `repositories` 结尾处添加：
