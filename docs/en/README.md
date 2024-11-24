@@ -4,6 +4,12 @@
 
 Use annotations to allow Retrofit to support multiple `baseUrl` and dynamically change `baseUrl`.
 
+**Features**
+
+- Support modifying the `baseUrl` using the `@BaseUrl` annotation in multiple ways
+- Support modifying the global `baseUrl` using `globalBaseUrl`
+- Prioritize using the `baseUrl` from the full path parameter annotated with `@Url`
+
 ## Gradle
 
 Add the following at the end of the `repositories` in the `settings.gradle` file:
@@ -144,6 +150,12 @@ MultiBaseUrls.getDynamicBaseUrls().put("url2", "https://xxxxxx.com/v3/");
 <!-- tabs:end -->
 
 ## Replace baseUrl rules
+
+Follow the rules below:
+
+- The full path parameter in the @Url annotation has the highest priority.
+- Dynamic domain names have a higher priority than static domain names.
+- The priority of function annotations is higher than that of class annotations.
 
 <img src="https://github.com/DylanCaiCoding/MultiBaseUrls/blob/main/docs/img/replace_base_url_rules.png" width="618" height="542">
 
